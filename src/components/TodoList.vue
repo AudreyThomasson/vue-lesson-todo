@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>ToDo List</h3>
-    <h5>There are {{ itemsRemaining.length }} items left to do today</h5>
+    <p>{{ itemsRemainingMessage }}</p>
     <div v-for="item in todos" :key="item.id">
       <TodoItem :todo="item" @status-change="handleStatusChange"/>
     </div>
@@ -28,8 +28,13 @@ export default {
         },
     },
     computed: {
-        itemsRemaining() {
-            return this.todos.filter((t) => !t.complete);
+        itemsRemainingMessage() {
+            const remaining = this.todos.filter((t) => !t.complete).length
+            if (remaining == 1) {
+                return "There is 1 item left to do today.";
+            } 
+            return `There are ${remaining} items left to do today.`;    
+        
         },
     },
 };
